@@ -154,7 +154,7 @@ const handleLogin = async () => {
     userCookie.value = data.value.data.datauser
     
     toast.add({ title: 'Login successful', color: 'success' })
-    await navigateTo('/')
+    await navigateTo('/dashboard')
   }
   
   loading.value = false
