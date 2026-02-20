@@ -64,6 +64,7 @@
         <a class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" href="#">Privacy Policy</a>
         <a class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" href="#">Terms of Service</a>
         <a class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" href="#">API Docs</a>
+        <NuxtLink class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" to="/changelog">Changelog</NuxtLink>
       </div>
       <div class="order-1 md:order-2">
         <p class="text-sm text-taupe-soft">© 2026 yang bikin <a class="text-primary hover:underline" href="https://instagram.com/saifulnadjib" target="_blank">@saifulnadjib</a> </p>
@@ -77,6 +78,14 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'SHiFT Flow - Modern Shift Management',
+  description: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  ogTitle: 'SHiFT Flow - Modern Shift Management',
+  ogDescription: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  twitterCard: 'summary_large_image',
+})
+
 definePageMeta({
   layout: false
 })

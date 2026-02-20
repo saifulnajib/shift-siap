@@ -108,6 +108,13 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Login - SHiFT Admin Portal',
+  description: 'Login to SHiFT Admin Portal to manage shifts and workforce schedules securely.',
+  ogTitle: 'Login - SHiFT Admin Portal',
+  ogDescription: 'Login to SHiFT Admin Portal to manage shifts and workforce schedules securely.',
+})
+
 // Define the response type from the login API
 interface LoginResponse {
   success: boolean
