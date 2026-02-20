@@ -60,19 +60,13 @@
             </div>
             
             <div class="pl-10 space-y-4">
-              <div v-for="commit in group.items" :key="commit.hash" class="bg-white border border-brown-border/10 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex flex-wrap items-start justify-between gap-4 mb-2">
-                  <div class="flex items-center gap-2">
-                    <UBadge :color="getBadgeColor(commit.type)" variant="subtle" size="sm" class="uppercase tracking-wider font-bold">
-                      {{ commit.type }}
-                    </UBadge>
-                  </div>
-                  <div class="flex items-center gap-1.5 text-xs text-taupe-soft">
-                    <UIcon name="i-heroicons-user" class="w-3.5 h-3.5" />
-                    {{ commit.author }}
-                  </div>
+              <div v-for="(item, i) in group.items" :key="i" class="bg-white border border-brown-border/10 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center gap-2 mb-2">
+                  <UBadge :color="getBadgeColor(item.type)" variant="subtle" size="sm" class="uppercase tracking-wider font-bold">
+                    {{ item.type }}
+                  </UBadge>
                 </div>
-                <p class="text-taupe-deep font-medium leading-relaxed">{{ commit.subject }}</p>
+                <p class="text-taupe-deep font-medium leading-relaxed">{{ item.subject }}</p>
               </div>
             </div>
           </div>
@@ -94,10 +88,7 @@ useSeoMeta({
 
 // Define data structure
 interface Commit {
-  hash: string
   subject: string
-  date: string
-  author: string
   type: string
 }
 
