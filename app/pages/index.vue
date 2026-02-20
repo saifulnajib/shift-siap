@@ -73,7 +73,7 @@
 
     <!-- Decorative Floating Shapes -->
     <div class="absolute top-1/4 -left-12 w-64 h-64 border-[32px] border-primary/5 rounded-full pointer-events-none -z-0"></div>
-    <div class="absolute bottom-1/4 -right-12 w-96 h-96 border-[48px] border-earth-terracotta/5 rounded-full pointer-events-none -z-0"></div>
+    <div class="absolute bottom-1/4 -right-12 w-96 h-96 border-[48px] border-slate-300 rounded-full pointer-events-none -z-0"></div>
   </div>
 </template>
 

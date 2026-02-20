@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxt/ui'],
   css: ['~/app.css'],
+  runtimeConfig: {
+    // Server-only (private) — tidak terekspos ke klien
+    siapApiUrl: process.env.SIAP_API_URL,
+    siapApiToken: process.env.SIAP_API_TOKEN,
+  },
   app: {
     head: {
       link: [
@@ -16,3 +21,4 @@ export default defineNuxtConfig({
     }
   }
 })
+

@@ -1,5 +1,5 @@
 <template>
-  <div class="font-display bg-background-light text-taupe-deep min-h-screen flex flex-col items-center justify-center overflow-hidden">
+  <div class="font-display bg-background-light dark:bg-background-dark text-taupe-deep dark:text-gray-100 min-h-screen flex flex-col items-center justify-center overflow-hidden">
     <!-- Background Canvas with Organic Shapes -->
     <div class="fixed inset-0 bg-canvas pointer-events-none">
       <div class="organic-shape absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-earth-terracotta"></div>
@@ -187,5 +187,19 @@ const handleLogin = async () => {
   background-color: #FDF5E6;
   background-image: radial-gradient(circle at 2px 2px, rgba(166, 137, 102, 0.05) 1px, transparent 0);
   background-size: 32px 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .bg-canvas {
+    background-color: #101922;
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+    background-size: 32px 32px;
+  }
+
+  .glass-card {
+    background: rgba(16, 25, 34, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
 }
 </style>

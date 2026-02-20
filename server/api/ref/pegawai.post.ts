@@ -1,4 +1,5 @@
 import { defineEventHandler, readBody, createError } from 'h3';
+import { getSiapUrl, getSiapHeaders } from '../../utils/siap';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -11,17 +12,13 @@ export default defineEventHandler(async (event) => {
         });
     }
 
-    // Manually construct x-www-form-urlencoded string
     const urlEncodedBody = `id_unit_opd=${encodeURIComponent(id_unit_opd)}`;
 
-    console.log('Fetching employees for unit OPD:', id_unit_opd);
-
     try {
-        const response: any = await $fetch('https://siap.tanjungpinangkota.go.id/rest/shift/getPegawai', {
+        const response: any = await $fetch(getSiapUrl('/rest/shift/getPegawai'), {
             method: 'POST',
             headers: {
-                'token': 'D7ypX0Rlg9fSSLr37aogBucOC6QaBIigT9yCb3VJ',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                ...getSiapHeaders(),
                 'Content-Length': Buffer.byteLength(urlEncodedBody).toString()
             },
             body: urlEncodedBody
@@ -31,27 +28,12 @@ export default defineEventHandler(async (event) => {
         if (typeof response === 'string') {
             try {
                 data = JSON.parse(response);
-            } catch (e) {
-                console.error('Failed to parse response JSON:', e);
-            }
+            } catch (e) { /* ignore parse error */ }
         }
 
-        console.log('Pegawai API Response (parsed):', data);
-
-        // Extract the employee array from the nested structure
         const employees = data?.data || [];
-
-        return {
-            success: true,
-            data: employees
-        };
+        return { success: true, data: employees };
     } catch (error: any) {
-        console.error('Pegawai API Error Details:', {
-            message: error.message,
-            statusCode: error.statusCode,
-            data: error.data,
-            response: error.response
-        });
         throw createError({
             statusCode: error.statusCode || error.response?.status || 500,
             message: error.data?.message || error.message || 'Failed to fetch employees'

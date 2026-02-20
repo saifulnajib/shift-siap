@@ -379,7 +379,7 @@ const resetUpload = () => {
       </div>
     </div>
 
-    <div class="flex-1 overflow-auto border border-gray-200 rounded-lg relative">
+    <div class="flex-1 overflow-auto border border-gray-200 dark:border-slate-700 rounded-lg relative">
         <!-- Loading Overlay -->
         <div v-if="isLoading" class="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm flex items-center justify-center z-30">
             <div class="flex flex-col items-center gap-3">
@@ -389,23 +389,23 @@ const resetUpload = () => {
         </div>
 
         <table class="w-full border-collapse text-sm">
-            <thead class="bg-gray-50 sticky top-0 z-10">
+            <thead class="bg-gray-50 dark:bg-slate-800 sticky top-0 z-10">
                 <tr>
-                    <th class="p-2 border border-gray-200 text-left min-w-[200px] sticky left-0 bg-gray-50 z-20">Pegawai</th>
-                    <th v-for="day in daysInMonth" :key="day.toString()" class="p-2 border border-gray-200 text-center min-w-[40px]">
-                        <div class="text-xs text-gray-500">{{ format(day, 'EEE') }}</div>
+                    <th class="p-2 border border-gray-200 dark:border-slate-700 text-left min-w-[200px] sticky left-0 bg-gray-50 dark:bg-slate-800 dark:text-slate-200 z-20">Pegawai</th>
+                    <th v-for="day in daysInMonth" :key="day.toString()" class="p-2 border border-gray-200 dark:border-slate-700 dark:text-slate-200 text-center min-w-[40px]">
+                        <div class="text-xs text-gray-500 dark:text-slate-400">{{ format(day, 'EEE') }}</div>
                         <div>{{ format(day, 'd') }}</div>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="emp in displayedEmployees" :key="emp.pin" class="hover:bg-gray-50">
-                    <td class="p-2 border border-gray-200 font-medium sticky left-0 bg-white z-10 truncate max-w-[200px]" :title="emp.nama">
+                <tr v-for="emp in displayedEmployees" :key="emp.pin" class="hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                    <td class="p-2 border border-gray-200 dark:border-slate-700 font-medium sticky left-0 bg-white dark:bg-slate-900 dark:text-slate-100 z-10 truncate max-w-[200px]" :title="emp.nama">
                         {{ emp.nama }}
-                        <div class="text-xs text-gray-500 font-normal">{{ emp.nip }}</div>
+                        <div class="text-xs text-gray-500 dark:text-slate-400 font-normal">{{ emp.nip }}</div>
                     </td>
                     <td v-for="day in daysInMonth" :key="day.toString()" 
-                        class="p-0 border border-gray-200 text-center cursor-pointer hover:bg-gray-100 transition-colors"
+                        class="p-0 border border-gray-200 dark:border-slate-700 text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700/50 transition-colors"
                         @click="openScheduleModal(emp, day)">
                         
                         <div v-if="getSchedule(emp.pin, day)" 

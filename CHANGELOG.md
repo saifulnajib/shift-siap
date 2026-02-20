@@ -8,14 +8,26 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 ## [2026-02-20]
 
 ### Added
+- Footer pada halaman Changelog dengan navigasi ke Beranda dan Support
+- Utility `server/utils/siap.ts` sebagai satu-satunya tempat URL & token SIAP API
+
+### Updated
+- `nuxt.config.ts` ditambahkan `runtimeConfig` untuk mengekspos env vars ke server
+- Sistem changelog beralih dari git-based ke file `CHANGELOG.md` manual
+
+### Added
 - Halaman Changelog yang dapat diakses publik dari halaman Landing
 - API `/api/changelog` untuk membaca data changelog
 - Link "Changelog" di footer halaman Landing
 
 ### Fixed
 - Halaman Changelog kini dapat diakses tanpa login (public access)
+- Pembaruan URL & token terpusat
+- Pembersihan `console.log` dan informasi debugging pada semua file server API untuk produksi
+- Perbaikan tampilan Dark Mode pada halaman Login, Header tabel Jadwal Shift, dan halaman Changelog
 
 ### Updated
+- Standarisasi warna dark mode menggunakan palet `background-dark` dan `slate` yang konsisten
 - Penambahan atribut meta SEO (`useSeoMeta`) pada halaman Landing dan Login
 
 ---

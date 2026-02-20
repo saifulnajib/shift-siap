@@ -1,4 +1,5 @@
 import { defineEventHandler, readBody, createError } from 'h3';
+import { getSiapUrl, getSiapHeaders } from '../../utils/siap';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -8,11 +9,10 @@ export default defineEventHandler(async (event) => {
     const urlEncodedBody = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
     try {
-        const response: any = await $fetch('https://siap.tanjungpinangkota.go.id/rest/api/loginAdminOpd', {
+        const response: any = await $fetch(getSiapUrl('/rest/api/loginAdminOpd'), {
             method: 'POST',
             headers: {
-                'token': 'D7ypX0Rlg9fSSLr37aogBucOC6QaBIigT9yCb3VJ',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                ...getSiapHeaders(),
                 'Content-Length': Buffer.byteLength(urlEncodedBody).toString()
             },
             body: urlEncodedBody
@@ -22,12 +22,8 @@ export default defineEventHandler(async (event) => {
         if (typeof response === 'string') {
             try {
                 data = JSON.parse(response);
-            } catch (e) {
-                console.error('Failed to parse response JSON:', e);
-            }
+            } catch (e) { /* ignore parse error */ }
         }
-
-        console.log('Login API Response (parsed):', data);
 
         if (data && data.loginStatus === true) {
             return { success: true, data: data };
@@ -38,9 +34,6 @@ export default defineEventHandler(async (event) => {
             });
         }
     } catch (error) {
-        console.error('Login Error:', error);
-
-        // Handle the error type properly
         const statusCode = (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response)
             ? (error.response.status as number)
             : 500;

@@ -25,11 +25,6 @@
             clear
             class="min-w-[200px]"
         />
-
-        <!-- Shift Type Filter -->
-        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
-          Shift Type: Morning <span class="material-symbols-outlined text-sm text-primary">check_circle</span>
-        </div>
       </div>
       <div class="h-4 w-[1px] bg-slate-300 dark:bg-slate-700 mx-2"></div>
       <div class="flex items-center gap-4 shrink-0">
