@@ -2,7 +2,7 @@ export default defineNuxtRouteMiddleware((to) => {
     const user = useCookie('user')
 
     // List of routes that don't require authentication
-    const publicRoutes = ['/login', '/']
+    const publicRoutes = ['/login', '/', '/changelog']
 
     // If user is not logged in and tries to access a protected route
     if (!user.value && !publicRoutes.includes(to.path)) {
