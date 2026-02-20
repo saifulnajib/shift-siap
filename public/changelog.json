@@ -1,0 +1,43 @@
+{
+  "generated": "2026-02-20T06:43:03.696Z",
+  "data": [
+    {
+      "date": "2026-02-20",
+      "items": [
+        {
+          "hash": "ba6dc87c42cf1b07e6733ce468851fd04b205e95",
+          "subject": "fixed: changelog public access",
+          "date": "2026-02-20",
+          "author": "Saiful Najib",
+          "type": "fixed"
+        },
+        {
+          "hash": "26638adb1dff2b9501a5c00103d09f3302209d06",
+          "subject": "added: atribut seo friendly dan halaman changelog",
+          "date": "2026-02-20",
+          "author": "Saiful Najib",
+          "type": "added"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-19",
+      "items": [
+        {
+          "hash": "c5c4ae805a5f488c55b9ad6b02594d627e1508a1",
+          "subject": "add landing page",
+          "date": "2026-02-19",
+          "author": "Saiful Najib",
+          "type": "added"
+        },
+        {
+          "hash": "f04cb06a99d7daa2229436bc7df390f478b792a3",
+          "subject": "first commit",
+          "date": "2026-02-19",
+          "author": "Saiful Najib",
+          "type": "updated"
+        }
+      ]
+    }
+  ]
+}
