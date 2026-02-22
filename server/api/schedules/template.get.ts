@@ -1,6 +1,7 @@
 import * as XLSX from 'xlsx'
 import { subMonths, setDate, eachDayOfInterval, format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { getSiapUrl, getSiapHeaders } from '../../utils/siap'
 
 export default defineEventHandler(async (event) => {
     // Auth check
@@ -11,6 +12,8 @@ export default defineEventHandler(async (event) => {
     if (username !== 'adminrsud' || password !== 'punyakepegawaian123') {
         throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
     }
+
+    const id_unit_opd = query.id_unit_opd as string
 
     // Determine period: 21st of previous month to 20th of current month
     const now = new Date()
@@ -28,14 +31,56 @@ export default defineEventHandler(async (event) => {
         headerRow.push(format(day, 'd MMM', { locale: id }))
     }
 
-    // Example data rows (template - user fills in shift codes)
-    const exampleRows = [
-        ['123456', '199001012020011001', 'Contoh Pegawai 1', ...days.map(() => '')],
-        ['789012', '199501012021012002', 'Contoh Pegawai 2', ...days.map(() => '')],
-    ]
+    // Prepare data rows
+    let rows: string[][] = []
+
+    if (id_unit_opd) {
+        try {
+            const urlEncodedBody = `id_unit_opd=${encodeURIComponent(id_unit_opd)}`
+            const response: any = await $fetch(getSiapUrl('/rest/shift/getPegawai'), {
+                method: 'POST',
+                headers: {
+                    ...getSiapHeaders(),
+                    'Content-Length': Buffer.byteLength(urlEncodedBody).toString()
+                },
+                body: urlEncodedBody
+            })
+
+            let data = response
+            if (typeof response === 'string') {
+                try {
+                    data = JSON.parse(response)
+                } catch (e) { /* ignore */ }
+            }
+
+            const employees = data?.data || []
+            rows = employees.map((emp: any) => [
+                emp.pin || '',
+                emp.nip || '',
+                emp.nama || '',
+                ...days.map(() => '')
+            ])
+        } catch (e) {
+            console.error('Failed to fetch employees for template', e)
+        }
+    }
+
+    // If no employees found or no unit selected, add example rows
+    if (rows.length === 0) {
+        rows = [
+            ['123456', '199001012020011001', 'Contoh Pegawai 1', ...days.map(() => '')],
+            ['789012', '199501012021012002', 'Contoh Pegawai 2', ...days.map(() => '')],
+        ]
+    }
 
     // Build worksheet
-    const wsData = [headerRow, ...exampleRows]
+    const wsData = [
+        ['TEMPLATE JADWAL SHIFT'],
+        ['Periode:', `${format(periodStart, 'd MMM yyyy', { locale: id })} - ${format(periodEnd, 'd MMM yyyy', { locale: id })}`],
+        ['Petunjuk:', 'Isi kode shift mulai dari baris ke-4. Jangan mengubah header PIN, NIP, dan Nama.'],
+        headerRow,
+        ...rows
+    ]
     const ws = XLSX.utils.aoa_to_sheet(wsData)
 
     // Style header row (column widths)
@@ -46,8 +91,8 @@ export default defineEventHandler(async (event) => {
         ...days.map(() => ({ wch: 8 })),
     ]
 
-    // Freeze first 3 columns
-    ws['!freeze'] = { xSplit: 3, ySplit: 1 }
+    // Freeze first 3 columns and first 4 rows (3 info + 1 header)
+    ws['!freeze'] = { xSplit: 3, ySplit: 4 }
 
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, 'Template Jadwal')

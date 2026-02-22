@@ -23,7 +23,10 @@ const downloadTemplate = async () => {
   try {
     const bulan = date.value.getMonth() + 1
     const tahun = date.value.getFullYear()
-    const url = `/api/schedules/template?username=adminrsud&password=punyakepegawaian123&bulan=${bulan}&tahun=${tahun}`
+    let url = `/api/schedules/template?username=adminrsud&password=punyakepegawaian123&bulan=${bulan}&tahun=${tahun}`
+    if (selectedUnitOpd.value?.id) {
+      url += `&id_unit_opd=${selectedUnitOpd.value.id}`
+    }
     const response = await fetch(url)
     if (!response.ok) throw new Error('Gagal mengunduh template')
     const blob = await response.blob()
@@ -327,8 +330,6 @@ const resetUpload = () => {
 <template>
   <div class="h-[calc(100vh-100px)] flex flex-col px-4 pt-4"> 
     <div class="flex justify-between items-center mb-4 gap-4">
-      <h2 class="text-2xl font-bold">Jadwal Shift</h2>
-      
       <!-- Filters -->
       <div class="flex items-center gap-3 flex-1 justify-center">
         <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Filters:</span>

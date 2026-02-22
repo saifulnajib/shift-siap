@@ -139,7 +139,6 @@ onMounted(() => {
   <div class="h-[calc(100vh-100px)] flex flex-col gap-4 px-4 pt-4">
     <!-- Header & Filters -->
     <div class="flex  justify-between items-center gap-4">
-      <h2 class="text-2xl font-bold">Data Pegawai</h2>
       
       <div class="flex items-center gap-3">
         <!-- Search -->
@@ -149,7 +148,7 @@ onMounted(() => {
             v-model="searchQuery"
             type="text"
             placeholder="Cari PIN, NIP, atau Nama..."
-            class="pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-slate-800 min-w-[300px]"
+            class=" pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-slate-800 min-w-[300px]"
           />
         </div>
 
@@ -160,7 +159,7 @@ onMounted(() => {
             value-attribute="label"
             placeholder="Semua Unit OPD"
             clear
-            class="min-w-[200px]"
+            class="min-w-[300px] min-h-[42px]"
         />
       </div>
     </div>

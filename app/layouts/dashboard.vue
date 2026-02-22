@@ -1,11 +1,13 @@
 <template>
-  <div class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex min-h-screen overflow-hidden font-display">
+  <div class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex h-screen overflow-hidden font-display">
     <DashboardSidebar @logout="onLogout" />
     
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
       <DashboardHeader />
-      <slot />
+      <div class="flex-1 overflow-y-auto">
+        <slot />
+      </div>
     </main>
 
 
