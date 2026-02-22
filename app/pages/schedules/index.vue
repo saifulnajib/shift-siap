@@ -6,6 +6,14 @@ definePageMeta({
   layout: 'dashboard'
 })
 
+useSeoMeta({
+  title: 'SHiFT Flow - Schedules',
+  description: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  ogTitle: 'SHiFT Flow - Modern Shift Management',
+  ogDescription: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  twitterCard: 'summary_large_image',
+})
+
 const date = ref(new Date())
 const { fetchEmployeesByUnitOpd, fetchDetailPresensi } = useSiapApi()
 const isDownloading = ref(false)
@@ -239,11 +247,12 @@ const parseExcelFile = async (file: File) => {
         const buffer = await file.arrayBuffer()
         const wb = read(buffer, { type: 'array' })
         const ws = wb.Sheets[wb.SheetNames[0]!]
-        const rows: any[][] = utils.sheet_to_json(ws!, { header: 1, defval: '' })
+        const rows: any[][] = utils.sheet_to_json(ws!, { header: 1, defval: '', range: 3 })
         if (rows.length < 2) {
-            uploadError.value = 'File tidak memiliki data (minimal 1 baris header + 1 baris data)'
+            uploadError.value = 'File tidak memiliki data yang valid (minimal 1 baris header + 1 baris data mulai dari baris ke-4)'
             return
         }
+        // Dengan range: 3, baris pertama (index 0) adalah header (Baris 4 di Excel)
         const [headerRow, ...dataRows] = rows
         const headers = headerRow as string[]
         // Kolom wajib di level atas

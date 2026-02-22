@@ -5,6 +5,17 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
 
+## [2026-02-22]
+
+### Updated
+- Logic parsing Excel pada halaman Jadwal Shift sekarang melewati 3 baris pertama (data dimulai dari baris ke-4)
+- Penamaan aplikasi di halaman Login dan Sidebar diubah menjadi `ShiftFlow`
+- Penambahan atribut informasi pada Header Admin (Judul Halaman dinamis, Tanggal hari ini, dan Info Pengguna)
+- Implementasi metadata SEO (`useSeoMeta`) di seluruh halaman panel admin (Dashboard, Pegawai, Jadwal, dan Shift)
+- Perbaikan layout dan standarisasi warna Nuxt UI v3 pada halaman Master Shift (Master Shift)
+
+---
+
 ## [2026-02-20]
 
 ### Added

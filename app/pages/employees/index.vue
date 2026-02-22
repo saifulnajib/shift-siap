@@ -3,6 +3,14 @@ definePageMeta({
   layout: 'dashboard'
 })
 
+useSeoMeta({
+  title: 'SHiFT Flow - Employees',
+  description: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  ogTitle: 'SHiFT Flow - Modern Shift Management',
+  ogDescription: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  twitterCard: 'summary_large_image',
+})
+
 const { fetchAllPegawai } = useSiapApi()
 
 // State

@@ -1,10 +1,21 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'dashboard'
+})
+
+useSeoMeta({
+  title: 'SHiFT Flow - Modern Shift Management',
+  description: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  ogTitle: 'SHiFT Flow - Modern Shift Management',
+  ogDescription: 'The all-in-one platform for seamless scheduling, workforce planning, and real-time team coordination.',
+  twitterCard: 'summary_large_image',
+})
 const columns = [
-  { key: 'name', label: 'Nama Shift' },
-  { key: 'start_time', label: 'Jam Mulai' },
-  { key: 'end_time', label: 'Jam Selesai' },
-  { key: 'color', label: 'Warna' },
-  { key: 'actions', label: 'Aksi' }
+  { key: 'name', label: 'Nama Shift', id: 'name' },
+  { key: 'start_time', label: 'Jam Mulai', id: 'start_time' },
+  { key: 'end_time', label: 'Jam Selesai', id: 'end_time' },
+  { key: 'color', label: 'Warna', id: 'color' },
+  { key: 'actions', label: 'Aksi', id: 'actions' }
 ]
 
 const { data: shifts, refresh } = await useFetch('/api/shifts')
@@ -79,11 +90,11 @@ const deleteShift = async (id: number) => {
 
     <UTable :rows="shifts || []" :columns="columns">
         <template #color-data="{ row }">
-            <div class="w-6 h-6 rounded-full" :style="{ backgroundColor: row.color }"></div>
+            <div class="w-6 h-6 rounded-full" :style="{ backgroundColor: (row as any).color }"></div>
         </template>
         <template #actions-data="{ row }">
-            <UButton icon="i-heroicons-pencil-square" variant="ghost" color="gray" @click="openModal(row)" />
-            <UButton icon="i-heroicons-trash" variant="ghost" color="red" @click="deleteShift(row.id)" />
+            <UButton icon="i-heroicons-pencil-square" variant="ghost" color="neutral" @click="openModal(row)" />
+            <UButton icon="i-heroicons-trash" variant="ghost" color="error" @click="deleteShift((row as any).id)" />
         </template>
     </UTable>
 
@@ -115,7 +126,7 @@ const deleteShift = async (id: number) => {
             </UFormGroup>
 
             <div class="flex justify-end gap-2 mt-6">
-                <UButton color="gray" variant="ghost" @click="isOpen = false">Batal</UButton>
+                <UButton color="neutral" variant="ghost" @click="isOpen = false">Batal</UButton>
                 <UButton type="submit" color="primary">Simpan</UButton>
             </div>
         </form>

@@ -10,7 +10,7 @@
     <main class="relative z-10 w-full max-w-md px-6">
       <!-- Header -->
       <div class="text-center mb-8">
-        <h1 class="text-2xl font-bold tracking-tight text-taupe-deep">ShiftAdmin</h1>
+        <h1 class="text-2xl font-bold tracking-tight text-taupe-deep">ShiftFlow</h1>
         <p class="text-taupe-soft text-sm mt-1">Management Portal v1.0</p>
       </div>
 
