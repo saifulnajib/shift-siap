@@ -205,6 +205,15 @@ const getSchedule = (employeePin: string, day: Date) => {
     )
 }
 
+const getShiftDisplay = (shiftName: string) => {
+    if (!shiftName) return ''
+    const name = shiftName.toLowerCase()
+    if (name.includes('pagi')) return 'P'
+    if (name.includes('malam')) return 'M'
+    if (name.includes('siang') || name.includes('sore')) return 'S'
+    return shiftName.substring(0, 1).toUpperCase()
+}
+
 // Modal Logic for Schedule Details
 const isOpen = ref(false)
 const selectedCell = reactive({
@@ -422,7 +431,7 @@ const resetUpload = () => {
                              class="h-10 w-full flex items-center justify-center text-white text-xs font-bold"
                              :style="{ backgroundColor: getSchedule(emp.pin, day).shift_color || '#ccc' }"
                              :title="getSchedule(emp.pin, day).shift_name">
-                             {{ getSchedule(emp.pin, day).shift_name.substring(0, 1) }}
+                             {{ getShiftDisplay(getSchedule(emp.pin, day).shift_name) }}
                         </div>
                         <div v-else class="h-10 w-full"></div>
                     </td>

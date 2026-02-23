@@ -156,7 +156,7 @@ const handleLogin = async () => {
   }
 
   if (data.value && data.value.success && data.value.data?.datauser) {
-    const userCookie = useCookie('user')
+    const userCookie = useCookie('user', { maxAge: 7200 })
     // The server returns { success: true, data: { ...datauser... } }
     userCookie.value = data.value.data.datauser
     

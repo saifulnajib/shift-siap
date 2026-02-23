@@ -4,6 +4,13 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
+## [2026-02-23]
+
+### Updated
+- Implementasi durasi sesi (cookie expire) selama 2 jam setelah login
+
+---
+
 
 ## [2026-02-22]
 
