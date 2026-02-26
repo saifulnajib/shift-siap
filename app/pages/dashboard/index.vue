@@ -99,7 +99,14 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-const date = ref(new Date())
+// Inisialisasi ke periode yang sedang berjalan:
+// Periode = 21 bulan lalu s/d 20 bulan ini.
+// Jika hari ini sudah lewat tanggal 20, periode aktif ada di bulan depan.
+const _today = new Date()
+const date = ref(_today.getDate() > 20
+    ? new Date(_today.getFullYear(), _today.getMonth() + 1, 1)
+    : new Date(_today.getFullYear(), _today.getMonth(), 1)
+)
 const schedules = ref<any[]>([])
 const isLoading = ref(false)
 const user = useCookie<any>('user')
