@@ -29,10 +29,18 @@ export const useSiapApi = () => {
         })
     }
 
+    const importSchedule = async (data: any[]) => {
+        return await $fetch('/api/schedules/import', {
+            method: 'POST',
+            body: { data }
+        })
+    }
+
     return {
         fetchEmployees,
         fetchEmployeesByUnitOpd,
         fetchDetailPresensi,
-        fetchAllPegawai
+        fetchAllPegawai,
+        importSchedule
     }
 }

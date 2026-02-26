@@ -15,7 +15,7 @@ useSeoMeta({
 })
 
 const date = ref(new Date())
-const { fetchEmployeesByUnitOpd, fetchDetailPresensi } = useSiapApi()
+const { fetchEmployeesByUnitOpd, fetchDetailPresensi, importSchedule } = useSiapApi()
 const isDownloading = ref(false)
 
 const downloadTemplate = async () => {
@@ -238,11 +238,14 @@ const uploadFileName = ref('')
 const uploadError = ref('')
 const parsedJson = ref<any[] | null>(null)
 const fileInputRef = ref<HTMLInputElement | null>(null)
+const isImporting = ref(false)
+const importResult = ref<{ success: boolean; message: string } | null>(null)
 
 const openUploadModal = () => {
     parsedJson.value = null
     uploadFileName.value = ''
     uploadError.value = ''
+    importResult.value = null
     isUploadOpen.value = true
 }
 
@@ -272,8 +275,9 @@ const parseExcelFile = async (file: File) => {
 
         // Konversi header tanggal "21 Jan" → "yyyy-dd-mm"
         // Periode: 21 bulan lalu s/d 20 bulan ini
-        const { parse: dateParse, format: dateFormat } = await import('date-fns')
+        const { parse: dateParse, format: dateFormat, isBefore, startOfDay } = await import('date-fns')
         const { id: idLocale } = await import('date-fns/locale')
+        const today = startOfDay(new Date())
         const currYear = date.value.getFullYear()
         const currMonth = date.value.getMonth() // 0-indexed
         const prevMonth = currMonth === 0 ? 11 : currMonth - 1
@@ -304,7 +308,11 @@ const parseExcelFile = async (file: File) => {
                     if (fixedCols.has(h)) {
                         obj[h] = val
                     } else if (val !== '') {
-                        jadwal[toIsoKey(h)] = val
+                        const isoDate = toIsoKey(h)
+                        // Validasi agar tanggal sebelum hari ini tidak masuk ke dalam json
+                        if (!isBefore(new Date(isoDate), today)) {
+                            jadwal[isoDate] = val
+                        }
                     }
                 })
                 obj['jadwal'] = jadwal
@@ -332,7 +340,22 @@ const resetUpload = () => {
     parsedJson.value = null
     uploadFileName.value = ''
     uploadError.value = ''
+    importResult.value = null
     if (fileInputRef.value) fileInputRef.value.value = ''
+}
+
+const submitImport = async () => {
+    if (!parsedJson.value?.length) return
+    isImporting.value = true
+    importResult.value = null
+    try {
+        const res: any = await importSchedule(parsedJson.value)
+        importResult.value = { success: true, message: res?.data?.message || 'Data berhasil dikirim ke server.' }
+    } catch (e: any) {
+        importResult.value = { success: false, message: e?.data?.message || e?.message || 'Gagal mengirim data ke server.' }
+    } finally {
+        isImporting.value = false
+    }
 }
 </script>
 
@@ -531,8 +554,14 @@ const resetUpload = () => {
         </div>
 
         <!-- Footer -->
-        <div class="p-5 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between shrink-0">
-          <p class="text-xs text-slate-400 italic">Endpoint server SIAP belum tersedia — data hanya ditampilkan sebagai preview</p>
+        <div class="p-5 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between shrink-0 flex-wrap gap-3">
+          <!-- Import Result Feedback -->
+          <div v-if="importResult" class="flex items-center gap-2 text-sm rounded-lg px-3 py-2"
+            :class="importResult.success ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400'">
+            <span class="material-symbols-outlined text-base">{{ importResult.success ? 'check_circle' : 'error' }}</span>
+            {{ importResult.message }}
+          </div>
+          <p v-else class="text-xs text-slate-400 italic">Data akan dikirim ke SIAP Tanjungpinang</p>
           <div class="flex gap-2">
             <UButton color="secondary" variant="ghost" size="sm" @click="isUploadOpen = false">Tutup</UButton>
             <UButton
@@ -540,8 +569,9 @@ const resetUpload = () => {
               icon="i-heroicons-paper-airplane"
               color="primary"
               size="sm"
-              disabled
-              title="Endpoint server SIAP belum tersedia"
+              :loading="isImporting"
+              :disabled="isImporting || !!importResult?.success"
+              @click="submitImport"
             >
               Kirim ke Server
             </UButton>
