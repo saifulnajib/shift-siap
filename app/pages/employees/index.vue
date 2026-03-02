@@ -81,7 +81,7 @@ const fetchUnitOpds = async () => {
     if (!user.value?.id_opd) return
     
     try {
-        const response: any = await $fetch(`/api/ref/unit-opd/${user.value.id_opd}`)
+        const response: any = await $fetch(`/api/ref/all-unit-opd/${user.value.id_opd}`)
         unitOpds.value = response.data || []
     } catch (e) {
         console.error('Failed to fetch Unit OPDs:', e)

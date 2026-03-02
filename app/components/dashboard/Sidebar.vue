@@ -27,10 +27,9 @@
         <span class="text-sm font-semibold">Manage Shifts</span>
         <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
       </NuxtLink>
-      <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+      <NuxtLink to="/reports" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
         <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/reports' }">bar_chart</span>
         <span class="text-sm font-semibold">Reports</span>
-        <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
       </NuxtLink>
       <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
         <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/settings' }">settings</span>

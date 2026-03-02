@@ -66,7 +66,7 @@
                     {{ item.type }}
                   </UBadge>
                 </div>
-                <p class="text-taupe-deep font-medium leading-relaxed">{{ item.subject }}</p>
+                <p class="text-taupe-deep font-medium leading-relaxed" v-html="renderInline(item.subject)"></p>
               </div>
             </div>
           </div>
@@ -137,5 +137,20 @@ const formatDate = (dateStr: string) => {
   } catch (e) {
     return dateStr
   }
+}
+
+/**
+ * Renders inline markdown: **bold**, `code`, [text](url)
+ * Output is trusted since input comes from the local CHANGELOG.md file.
+ */
+const renderInline = (text: string): string => {
+  return text
+    // [text](url) → <a>
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-primary underline hover:opacity-80">$1</a>')
+    // **bold** or __bold__
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    // `code`
+    .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-primary font-mono text-sm font-normal">$1</code>')
 }
 </script>

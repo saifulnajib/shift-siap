@@ -4,6 +4,31 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
+## [2026-02-28]
+
+### Added
+- Halaman **Laporan Absensi** (`/reports`) untuk mencetak laporan kehadiran pegawai dalam format PDF
+- Form filter laporan: Unit OPD, Pegawai, tanggal mulai, dan tanggal selesai
+- Input manual data penandatangan (Nama, NIP, Pangkat, Jabatan)
+- Pratinjau laporan dalam format A4 langsung di browser
+- Tombol **Cetak** dengan CSS khusus agar hanya kanvas laporan yang dicetak
+
+### Updated
+- Link **"Laporan"** pada sidebar dashboard diarahkan ke halaman `/reports`
+- Dropdown Unit OPD distandarisasi menggunakan komponen `UnitOpdSelect` yang dapat digunakan kembali di halaman Pegawai dan Laporan
+
+---
+## [2026-02-26]
+
+### Added
+- Integrasi pengiriman data jadwal ke SIAP 
+- Tombol **Kirim ke Server** pada modal Upload Excel kini aktif dengan indikator loading dan feedback sukses/error
+
+### Updated
+- Validasi saat impor Excel: tanggal sebelum hari ini tidak dimasukkan ke dalam data JSON (hanya tanggal hari ini dan seterusnya yang dikirim)
+- Halaman **Dashboard** dan **Jadwal Shift** kini otomatis menampilkan periode yang sedang berjalan saat pertama kali dibuka (jika tanggal > 20, periode aktif berpindah ke bulan berikutnya)
+
+---
 ## [2026-02-23]
 
 ### Updated
