@@ -72,6 +72,15 @@
             <span v-else>Loading...</span>
             <span v-if="!loading" class="material-icons text-xl">login</span>
           </button>
+
+          <!-- Back to Landing -->
+          <NuxtLink
+            to="/"
+            class="w-full flex items-center justify-center space-x-2 py-3 rounded-lg border border-brown-border/30 text-taupe-soft hover:text-taupe-deep hover:bg-white/30 text-sm font-medium transition-all duration-200 active:scale-[0.98]"
+          >
+            <span class="material-icons text-base">arrow_back</span>
+            <span>Kembali ke Beranda</span>
+          </NuxtLink>
         </form>
 
         <!-- Footer Links -->

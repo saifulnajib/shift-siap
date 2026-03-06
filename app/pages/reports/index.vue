@@ -30,13 +30,37 @@
         <!-- Tanggal Mulai -->
         <div class="flex flex-col gap-1">
           <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tanggal Mulai</label>
-          <UInput v-model="dateStart" type="date" class="w-44" />
+          <UPopover :content="{ align: 'start' }">
+            <UButton
+              color="neutral"
+              variant="outline"
+              icon="i-heroicons-calendar-days"
+              class="w-44 justify-start font-normal"
+            >
+              {{ dateStartLabel }}
+            </UButton>
+            <template #content>
+              <UCalendar :model-value="calendarStart as any" @update:model-value="calendarStart = $event as any" />
+            </template>
+          </UPopover>
         </div>
 
         <!-- Tanggal Selesai -->
         <div class="flex flex-col gap-1">
           <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tanggal Selesai</label>
-          <UInput v-model="dateEnd" type="date" class="w-44" />
+          <UPopover :content="{ align: 'start' }">
+            <UButton
+              color="neutral"
+              variant="outline"
+              icon="i-heroicons-calendar-days"
+              class="w-44 justify-start font-normal"
+            >
+              {{ dateEndLabel }}
+            </UButton>
+            <template #content>
+              <UCalendar :model-value="calendarEnd as any" @update:model-value="calendarEnd = $event as any" />
+            </template>
+          </UPopover>
         </div>
       </div>
 
@@ -50,46 +74,61 @@
       </UButton>
     </section>
 
-    <!-- ══ SIGNATORY PANEL (no-print) ══════════════════════════════════════ -->
-    <section v-if="showReport" class="no-print bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700 px-6 py-4">
-      <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Data Penandatangan</p>
-      <div class="flex flex-wrap gap-3">
+    <!-- ══ BODY: SIGNATORY (1) + PREVIEW (3) ═══════════════════════════════ -->
+    <div class="no-print-layout flex flex-1 overflow-hidden">
+
+      <!-- ── Kolom Kiri: Signatory (1/4) ────────────────────────────────── -->
+      <aside class="no-print w-1/4 min-w-[220px] flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-5 gap-4 overflow-y-auto shrink-0">
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Data Penandatangan</p>
+
         <div class="flex flex-col gap-1">
           <label class="text-[11px] text-slate-500">Nama</label>
-          <UInput v-model="signer.nama" placeholder="Nama lengkap" class="w-52" />
+          <UInput v-model="signer.nama" placeholder="Nama lengkap" />
         </div>
         <div class="flex flex-col gap-1">
           <label class="text-[11px] text-slate-500">NIP</label>
-          <UInput v-model="signer.nip" placeholder="NIP" class="w-44" />
+          <UInput v-model="signer.nip" placeholder="NIP" />
         </div>
         <div class="flex flex-col gap-1">
           <label class="text-[11px] text-slate-500">Pangkat / Golongan</label>
-          <UInput v-model="signer.pangkat" placeholder="Pangkat / Golongan" class="w-52" />
+          <UInput v-model="signer.pangkat" placeholder="Pangkat / Golongan" />
         </div>
         <div class="flex flex-col gap-1">
           <label class="text-[11px] text-slate-500">Jabatan</label>
-          <UInput v-model="signer.jabatan" placeholder="Jabatan" class="w-52" />
+          <UInput v-model="signer.jabatan" placeholder="Jabatan" />
         </div>
         <div class="flex flex-col gap-1">
           <label class="text-[11px] text-slate-500">Tempat, Tanggal</label>
-          <UInput v-model="signer.tempat" placeholder="Tanjungpinang, 26 Februari 2026" class="w-60" />
+          <UInput v-model="signer.tempat" placeholder="Tanjungpinang, 26 Februari 2026" />
         </div>
-        <div class="flex items-end">
-          <UButton icon="i-heroicons-printer" color="success" variant="soft" @click="printReport">
+
+        <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+          <UButton
+            v-if="showReport"
+            icon="i-heroicons-printer"
+            color="success"
+            block
+            @click="printReport"
+          >
             Cetak PDF
           </UButton>
+          <p v-else class="text-xs text-slate-400 text-center">Generate preview dulu sebelum mencetak.</p>
         </div>
-      </div>
-    </section>
+      </aside>
 
-    <!-- ══ PREVIEW / EMPTY STATE ══════════════════════════════════════════ -->
-    <div v-if="!showReport" class="flex-1 flex flex-col items-center justify-center text-slate-400 gap-3">
-      <span class="material-symbols-outlined text-6xl">picture_as_pdf</span>
-      <p class="font-semibold">Pilih pegawai dan rentang tanggal, lalu klik <strong>Preview Laporan</strong></p>
-    </div>
+      <!-- ── Kolom Kanan: Preview PDF (3/4) ─────────────────────────────── -->
+      <div class="flex-1 overflow-auto">
 
-    <!-- ══ PRINT AREA ══════════════════════════════════════════════════════ -->
-    <div v-else id="print-area" class="flex-1 overflow-auto bg-slate-200 dark:bg-slate-700 p-6 relative">
+        <!-- Empty state -->
+        <div v-if="!showReport" class="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
+          <span class="material-symbols-outlined text-6xl">picture_as_pdf</span>
+          <p class="font-semibold">Pilih pegawai dan rentang tanggal, lalu klik <strong>Preview Laporan</strong></p>
+        </div>
+
+        <!-- ══ PRINT AREA ════════════════════════════════════════════════ -->
+        <div v-else id="print-area" class="bg-slate-200 dark:bg-slate-700 p-6">
+
+
       <!-- A4 Paper -->
       <div class="mx-auto bg-white shadow-xl print-page relative overflow-hidden" style="width:210mm; min-height:297mm; padding:20mm 20mm 25mm 25mm; font-family:'Bookman Old Style', Bookman, serif; font-size:12pt; color:#000;">
 
@@ -194,8 +233,11 @@
         </div>
 
         </div> <!-- Tutup relative z-10 -->
-      </div>
-    </div>
+      </div> <!-- Tutup A4 Paper -->
+    </div> <!-- Tutup print-area -->
+
+      </div> <!-- Tutup kolom kanan -->
+    </div> <!-- Tutup flex row wrapper -->
 
   </div>
 </template>
@@ -203,6 +245,7 @@
 <script setup lang="ts">
 import { format, eachMonthOfInterval, startOfMonth, endOfMonth } from 'date-fns'
 import { id as idLocale } from 'date-fns/locale'
+import { type DateValue } from '@internationalized/date'
 
 definePageMeta({ layout: 'dashboard' })
 useSeoMeta({
@@ -218,10 +261,28 @@ const unitOpds = ref<any[]>([])
 const selectedUnitOpd = ref<any>(null)
 const employees = ref<any[]>([])
 const selectedEmployee = ref<any>(null)
-const dateStart = ref('')
-const dateEnd = ref('')
 const showReport = ref(false)
 const printedAt = ref('')
+
+// ── Calendar state (UCalendar pakai DateValue) ────────────────────────
+const calendarStart = ref<DateValue | null>(null)
+const calendarEnd   = ref<DateValue | null>(null)
+
+// Konversi CalendarDate → string YYYY-MM-DD yang dipakai seluruh logika
+const dateStart = computed(() =>
+  calendarStart.value ? `${calendarStart.value.year}-${String(calendarStart.value.month).padStart(2,'0')}-${String(calendarStart.value.day).padStart(2,'0')}` : ''
+)
+const dateEnd = computed(() =>
+  calendarEnd.value ? `${calendarEnd.value.year}-${String(calendarEnd.value.month).padStart(2,'0')}-${String(calendarEnd.value.day).padStart(2,'0')}` : ''
+)
+
+// Label yang ditampilkan di tombol kalender
+const dateStartLabel = computed(() =>
+  calendarStart.value ? format(new Date(dateStart.value), 'd MMM yyyy', { locale: idLocale }) : 'Pilih tanggal'
+)
+const dateEndLabel = computed(() =>
+  calendarEnd.value ? format(new Date(dateEnd.value), 'd MMM yyyy', { locale: idLocale }) : 'Pilih tanggal'
+)
 
 const unitOpdOptions = computed(() => unitOpds.value.map(u => ({ id: u.id_unit_opd, label: u.nama_unit_opd, ...u })))
 const employeeOptions = computed(() => employees.value.map(e => ({ id: e.pin, label: e.nama, ...e })))
@@ -291,7 +352,7 @@ watch(selectedUnitOpd, async (val) => {
   }
 })
 
-watch([selectedEmployee, dateStart, dateEnd], () => { showReport.value = false })
+watch([selectedEmployee, calendarStart, calendarEnd], () => { showReport.value = false })
 
 onMounted(fetchUnitOpds)
 </script>

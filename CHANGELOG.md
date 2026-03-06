@@ -4,6 +4,17 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
+## [2026-03-06]
+
+### Added
+- Tombol **Kembali ke Beranda** pada halaman Login untuk navigasi kembali ke landing page
+- Kalender interaktif (`UCalendar`) pada halaman **Laporan** menggantikan input tanggal native browser untuk memilih Tanggal Mulai dan Tanggal Selesai
+
+### Updated
+- Layout halaman **Laporan** diubah menjadi dua kolom bersebelahan dengan rasio **1:3** — panel *Data Penandatangan* di kiri dan pratinjau PDF di kanan
+- Panel *Data Penandatangan* kini selalu terlihat di kolom kiri dan tombol **Cetak PDF** dipindahkan ke bawah panel tersebut
+
+---
 ## [2026-02-28]
 
 ### Added
