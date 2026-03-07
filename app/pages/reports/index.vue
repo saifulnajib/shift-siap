@@ -233,8 +233,8 @@
         </div>
 
         </div> <!-- Tutup relative z-10 -->
-      </div> <!-- Tutup A4 Paper -->
-    </div> <!-- Tutup print-area -->
+        </div> <!-- Tutup A4 Paper -->
+        </div> <!-- Tutup print-area -->
 
       </div> <!-- Tutup kolom kanan -->
     </div> <!-- Tutup flex row wrapper -->

@@ -61,7 +61,7 @@
     <!-- Discreet Footer -->
     <footer class="relative z-10 w-full px-12 py-8 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-brown-border/10">
       <div class="flex items-center gap-8 order-2 md:order-1">
-        <a class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" href="#">Privacy Policy</a>
+        <NuxtLink class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" to="/privacy-policy">Privacy Policy</NuxtLink>
         <a class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" href="#">Terms of Service</a>
         <a class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" href="#">API Docs</a>
         <NuxtLink class="text-sm font-medium text-taupe-soft hover:text-primary transition-colors" to="/changelog">Changelog</NuxtLink>
