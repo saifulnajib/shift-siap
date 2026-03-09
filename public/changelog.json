@@ -1,6 +1,39 @@
 {
-  "generated": "2026-02-20T06:43:03.696Z",
+  "generated": "2026-03-09T00:05:18.000Z",
   "data": [
+    {
+      "date": "2026-03-09",
+      "items": [
+        {
+          "hash": "kinerja-page-001",
+          "subject": "added: halaman Kinerja dengan integrasi API e-Kinerja BKN",
+          "date": "2026-03-09",
+          "author": "Saiful Najib",
+          "type": "added"
+        },
+        {
+          "hash": "kinerja-page-002",
+          "subject": "added: filter tahun, bulan, status (Belum Buat), dan pencarian nama/NIP",
+          "date": "2026-03-09",
+          "author": "Saiful Najib",
+          "type": "added"
+        },
+        {
+          "hash": "kinerja-page-003",
+          "subject": "added: left join data kinerja dengan daftar pegawai OPD sesi",
+          "date": "2026-03-09",
+          "author": "Saiful Najib",
+          "type": "added"
+        },
+        {
+          "hash": "kinerja-page-004",
+          "subject": "added: paginasi client-side dan API proxy ke endpoint BKN",
+          "date": "2026-03-09",
+          "author": "Saiful Najib",
+          "type": "added"
+        }
+      ]
+    },
     {
       "date": "2026-02-20",
       "items": [

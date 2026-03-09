@@ -31,6 +31,10 @@
         <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/reports' }">bar_chart</span>
         <span class="text-sm font-semibold">Reports</span>
       </NuxtLink>
+      <NuxtLink to="/kinerja" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/kinerja' }">monitoring</span>
+        <span class="text-sm font-semibold">Kinerja</span>
+      </NuxtLink>
       <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
         <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/settings' }">settings</span>
         <span class="text-sm font-semibold">Settings</span>

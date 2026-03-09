@@ -4,6 +4,19 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
+## [2026-03-09]
+
+### Added
+- Halaman **Kinerja** (`/kinerja`) dengan tabel data kinerja pegawai yang terintegrasi dengan API e-Kinerja BKN
+- Filter dropdown **Tahun** dan **Bulan** untuk memilih periode penilaian kinerja
+- Filter dropdown **Status** (Semua / Sudah Buat / Belum Buat) untuk memfilter data berdasarkan status pengisian kinerja
+- Kolom pencarian real-time berdasarkan **Nama** dan **NIP** pegawai
+- Paginasi *client-side* (50 data per halaman) untuk menangani ribuan data tanpa membebani *browser*
+- Tampilkan kolom: No, Nama, NIP, Jabatan, Nilai Kinerja, Perilaku Kerja, dan Predikat
+- Logika **left join** antara daftar pegawai OPD sesi dan data kinerja BKN — pegawai yang belum mengisi ditampilkan dengan label **BELUM BUAT**
+- Backend API proxy (`/api/kinerja`) dan (`/api/kinerja/periodes`) untuk komunikasi ke endpoint BKN melalui SIAP
+
+---
 ## [2026-03-06]
 
 ### Added
@@ -46,8 +59,6 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 ### Updated
 - Implementasi durasi sesi (cookie expire) selama 2 jam setelah login
 
----
-
 
 ## [2026-02-22]
 
@@ -65,25 +76,21 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 ### Added
 - Footer pada halaman Changelog dengan navigasi ke Beranda dan Support
 - Utility `server/utils/siap.ts` sebagai satu-satunya tempat URL & token SIAP API
+- Halaman Changelog yang dapat diakses publik dari halaman Landing
+- API `/api/changelog` untuk membaca data changelog
+- Link "Changelog" di footer halaman Landing
 
 ### Updated
 - `nuxt.config.ts` ditambahkan `runtimeConfig` untuk mengekspos env vars ke server
 - Sistem changelog beralih dari git-based ke file `CHANGELOG.md` manual
-
-### Added
-- Halaman Changelog yang dapat diakses publik dari halaman Landing
-- API `/api/changelog` untuk membaca data changelog
-- Link "Changelog" di footer halaman Landing
+- Standarisasi warna dark mode menggunakan palet `background-dark` dan `slate` yang konsisten
+- Penambahan atribut meta SEO (`useSeoMeta`) pada halaman Landing dan Login
 
 ### Fixed
 - Halaman Changelog kini dapat diakses tanpa login (public access)
 - Pembaruan URL & token terpusat
 - Pembersihan `console.log` dan informasi debugging pada semua file server API untuk produksi
 - Perbaikan tampilan Dark Mode pada halaman Login, Header tabel Jadwal Shift, dan halaman Changelog
-
-### Updated
-- Standarisasi warna dark mode menggunakan palet `background-dark` dan `slate` yang konsisten
-- Penambahan atribut meta SEO (`useSeoMeta`) pada halaman Landing dan Login
 
 ---
 
