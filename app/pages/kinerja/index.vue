@@ -16,9 +16,8 @@ const opdPegawai = ref<any[]>([]) // Daftar pegawai dari OPD session (untuk left
 const items = ref<any[]>([]) // Data API e-kinerja akan masuk ke sini
 const columns = [
   { accessorKey: 'no', header: 'No' },
-  { accessorKey: 'nama', header: 'Nama' },
+  { accessorKey: 'nama', header: 'Nama / Jabatan' },
   { accessorKey: 'nip', header: 'NIP' },
-  { accessorKey: 'jabatan', header: 'Jabatan' },
   { accessorKey: 'nilai', header: 'Nilai Kinerja' },
   { accessorKey: 'perilaku', header: 'Perilaku Kerja' },
   { accessorKey: 'predikat', header: 'Predikat' },
@@ -109,9 +108,9 @@ const refreshData = async () => {
                    nama: item.nama || '-',
                    nip: item.nip || '-',
                    jabatan: item.skp_jabatan || '-',
-                   nilai: item.hasil_kerja || '-',
-                   perilaku: item.perilaku_kerja || '-',
-                   predikat: item.hasil_akhir || '-',
+                   nilai: (item.hasil_kerja && item.hasil_kerja !== '-') ? item.hasil_kerja : 'BELUM BUAT',
+                   perilaku: (item.perilaku_kerja && item.perilaku_kerja !== '-') ? item.perilaku_kerja : 'BELUM BUAT',
+                   predikat: (item.hasil_akhir && item.hasil_akhir !== '-') ? item.hasil_akhir : 'BELUM BUAT',
                    ...item
                }))
                
@@ -180,7 +179,7 @@ onMounted(async () => {
     <div class="flex justify-between items-center mb-4 gap-4">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Data Kinerja</h1>
-        <p class="text-slate-500 text-sm mt-1">Data table kinerja pegawai yang terintegrasi dengan API e-Kinerja.</p>
+        <p class="text-slate-500 text-sm mt-1">Data table kinerja pegawai yang terintegrasi dengan API e-Kinerja BKN.</p>
       </div>
 
       <div class="flex items-center gap-3">
@@ -248,6 +247,12 @@ onMounted(async () => {
             :loading="isLoading"
             class="w-full"
         >
+            <template #nama-cell="{ row }">
+              <div class="min-w-0">
+                <p class="font-medium text-slate-900 dark:text-white break-words whitespace-normal leading-snug">{{ row.original.nama }}</p>
+                <p class="text-xs text-slate-400 dark:text-slate-500 break-words whitespace-normal leading-snug mt-0.5">{{ row.original.jabatan }}</p>
+              </div>
+            </template>
             <template #nilai-cell="{ row }">
               <UBadge :color="row.original.nilai?.toLowerCase() === 'sesuai' ? 'success' : 'warning'" variant="subtle">
                 {{ row.original.nilai?.toUpperCase() }}

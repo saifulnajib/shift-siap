@@ -20,14 +20,14 @@
         },
         {
           "hash": "kinerja-page-003",
-          "subject": "added: left join data kinerja dengan daftar pegawai OPD sesi",
+          "subject": "added: kolom Jabatan digabung sebagai subtitle Nama",
           "date": "2026-03-09",
           "author": "Saiful Najib",
           "type": "added"
         },
         {
           "hash": "kinerja-page-004",
-          "subject": "added: paginasi client-side dan API proxy ke endpoint BKN",
+          "subject": "added: left join data pns & marking 'BELUM BUAT' otomatis",
           "date": "2026-03-09",
           "author": "Saiful Najib",
           "type": "added"

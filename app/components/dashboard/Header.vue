@@ -44,7 +44,7 @@ const today = computed(() => format(new Date(), 'EEEE, d MMMM yyyy', { locale: i
       <!-- User Info Badge -->
       <div class="flex flex-col items-end text-right">
         <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-none mb-1">{{ user?.username || 'Admin' }}</span>
-        <span class="text-[10px] font-medium text-slate-500 uppercase tracking-wider leading-none">{{ user?.nama_unit_opd || 'Super Admin' }}</span>
+        <span class="text-[10px] font-medium text-slate-500 uppercase tracking-wider leading-none">{{ user?.nama_unit_opd || 'Admin Dinas' }}</span>
       </div>
 
     </div>

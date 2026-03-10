@@ -12,8 +12,8 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 - Filter dropdown **Status** (Semua / Sudah Buat / Belum Buat) untuk memfilter data berdasarkan status pengisian kinerja
 - Kolom pencarian real-time berdasarkan **Nama** dan **NIP** pegawai
 - Paginasi *client-side* (50 data per halaman) untuk menangani ribuan data tanpa membebani *browser*
-- Tampilkan kolom: No, Nama, NIP, Jabatan, Nilai Kinerja, Perilaku Kerja, dan Predikat
-- Logika **left join** antara daftar pegawai OPD sesi dan data kinerja BKN — pegawai yang belum mengisi ditampilkan dengan label **BELUM BUAT**
+- Tampilkan kolom: No, Nama / Jabatan (digabung), NIP, Nilai Kinerja, Perilaku Kerja, dan Predikat
+- Logika **left join** antara daftar pegawai OPD sesi dan data kinerja BKN — pegawai yang belum mengisi data kinerja (nilai '-') ditampilkan otomatis dengan label/badge **BELUM BUAT**
 - Backend API proxy (`/api/kinerja`) dan (`/api/kinerja/periodes`) untuk komunikasi ke endpoint BKN melalui SIAP
 
 ---
