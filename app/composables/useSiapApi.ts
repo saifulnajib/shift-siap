@@ -36,11 +36,16 @@ export const useSiapApi = () => {
         })
     }
 
+    const fetchJadwalWfh = async () => {
+        return await $fetch('/api/ref/jadwal-wfh')
+    }
+
     return {
         fetchEmployees,
         fetchEmployeesByUnitOpd,
         fetchDetailPresensi,
         fetchAllPegawai,
-        importSchedule
+        importSchedule,
+        fetchJadwalWfh
     }
 }

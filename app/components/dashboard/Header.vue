@@ -11,6 +11,8 @@ const pageTitle = computed(() => {
   if (path === '/dashboard') return 'Dashboard Overview'
   if (path === '/schedules') return 'Shift Schedules'
   if (path === '/employees') return 'Employee Management'
+  if (path === '/wfh') return 'WFH Management'
+  if (path === '/wfh/create') return 'Tambah WFH'
   return 'Admin Panel'
 })
 

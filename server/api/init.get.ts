@@ -30,6 +30,22 @@ export default defineEventHandler(async () => {
       )
     `);
 
+    // Create WFH Records Table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS wfh_records (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        pin VARCHAR(50) NOT NULL,
+        nip VARCHAR(50),
+        nama VARCHAR(255) NOT NULL,
+        start_date DATE NOT NULL,
+        end_date DATE NOT NULL,
+        keterangan TEXT,
+        id_unit_opd VARCHAR(100),
+        id_opd VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     return { success: true, message: 'Database initialized successfully' };
   } catch (error) {
     return createError({

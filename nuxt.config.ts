@@ -19,6 +19,17 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap' }
       ]
     }
-  }
+  },
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+    scheduledTasks: {
+      // Setiap hari jam 05:00 WIB (UTC+7 → UTC 22:00 sebelumnya)
+      // Cron: menit jam hari bulan hari-minggu
+      '0 22 * * *': ['app:daily-sync'],
+    },
+  },
 })
+
 
