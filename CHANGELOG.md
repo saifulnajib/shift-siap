@@ -4,6 +4,18 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
+## [2026-08-07]
+
+### Added
+- Modul Admin UPTD beserta rute khusus (`/uptd`) dan layout *sidebar* terpisah.
+- Halaman **Pegawai UPTD** (`/uptd/pegawai`) untuk menampilkan daftar pegawai per UPTD.
+- Halaman **Presensi UPTD** (`/uptd/presensi`) untuk memantau kehadiran harian pegawai UPTD.
+- Endpoint API Backend `/api/uptd/dashboard-stats` untuk data statistik di dashboard Admin UPTD.
+
+### Fixed
+- Perbaikan *error* TypeScript (`DateValue` Type Mismatch) pada filter tanggal presensi akibat isu *deep unwrapping* pada Vue `ref`.
+
+---
 ## [2026-03-09]
 
 ### Added
