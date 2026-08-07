@@ -126,7 +126,7 @@ const deleteShift = async (id: number) => {
             </UFormGroup>
 
             <div class="flex justify-end gap-2 mt-6">
-                <UButton color="neutral" variant="ghost" @click="isOpen = false">Batal</UButton>
+                <UButton color="neutral" variant="ghost" @click="isOpen = false;">Batal</UButton>
                 <UButton type="submit" color="primary">Simpan</UButton>
             </div>
         </form>

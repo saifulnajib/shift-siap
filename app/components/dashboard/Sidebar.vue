@@ -10,42 +10,61 @@
       </div>
     </div>
     <nav class="flex-1 px-4 space-y-1">
-      <NuxtLink to="/dashboard" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/dashboard' }">dashboard</span>
-        <span class="text-sm font-semibold">Dashboard</span>
-      </NuxtLink>
-      <NuxtLink to="/schedules" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/schedules' }">calendar_month</span>
-        <span class="text-sm font-semibold">Schedule</span>
-      </NuxtLink>
-      <NuxtLink to="/employees" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/employees' }">group</span>
-        <span class="text-sm font-semibold">Employees</span>
-      </NuxtLink>
-      <NuxtLink to="/wfh" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/wfh' }">home_work</span>
-        <span class="text-sm font-semibold">WFH Pegawai</span>
-      </NuxtLink>
-      <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/reports' }">swap_calls</span>
-        <span class="text-sm font-semibold">Manage Shifts</span>
-        <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
-      </NuxtLink>
-      <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/reports' }">bar_chart</span>
-        <span class="text-sm font-semibold">Reports</span>
-        <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
-      </NuxtLink>
-      <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/kinerja' }">monitoring</span>
-        <span class="text-sm font-semibold">Kinerja</span>
-        <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
-      </NuxtLink>
-      <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
-        <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/settings' }">settings</span>
-        <span class="text-sm font-semibold">Settings</span>
-        <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
-      </NuxtLink>
+      <template v-if="isDinasPendidikanAdmin">
+        <!-- Menu khusus untuk Admin Dinas Pendidikan -->
+        <NuxtLink to="/uptd/dashboard" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/uptd/dashboard' }">dashboard</span>
+          <span class="text-sm font-semibold">Dashboard UPTD</span>
+        </NuxtLink>
+        <NuxtLink to="/uptd/pegawai" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/uptd/pegawai' }">manage_accounts</span>
+          <span class="text-sm font-semibold">Pegawai UPTD</span>
+        </NuxtLink>
+        <NuxtLink to="/uptd/presensi" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/uptd/presensi' }">domain</span>
+          <span class="text-sm font-semibold">Presensi UPTD</span>
+        </NuxtLink>
+      </template>
+
+      <template v-else>
+        <!-- Menu umum untuk user lainnya -->
+        <NuxtLink to="/dashboard" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/dashboard' }">dashboard</span>
+          <span class="text-sm font-semibold">Dashboard</span>
+        </NuxtLink>
+        <NuxtLink to="/schedules" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/schedules' }">calendar_month</span>
+          <span class="text-sm font-semibold">Schedule</span>
+        </NuxtLink>
+        <NuxtLink to="/employees" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/employees' }">group</span>
+          <span class="text-sm font-semibold">Employees</span>
+        </NuxtLink>
+        <NuxtLink to="/wfh" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/wfh' }">home_work</span>
+          <span class="text-sm font-semibold">WFH Pegawai</span>
+        </NuxtLink>
+        <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/reports' }">swap_calls</span>
+          <span class="text-sm font-semibold">Manage Shifts</span>
+          <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
+        </NuxtLink>
+        <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/reports' }">bar_chart</span>
+          <span class="text-sm font-semibold">Reports</span>
+          <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
+        </NuxtLink>
+        <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/kinerja' }">monitoring</span>
+          <span class="text-sm font-semibold">Kinerja</span>
+          <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
+        </NuxtLink>
+        <NuxtLink to="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" active-class="bg-primary/10 text-primary hover:bg-primary/10">
+          <span class="material-symbols-outlined group-hover:text-primary" :class="{ 'text-primary': $route.path === '/settings' }">settings</span>
+          <span class="text-sm font-semibold">Settings</span>
+          <UBadge color="warning" variant="subtle" size="xs" class="ml-auto">Soon</UBadge>
+        </NuxtLink>
+      </template>
     </nav>
     <div class="p-4 mt-auto">
       <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-4">
@@ -70,6 +89,13 @@
 <script setup lang="ts">
 const user = useCookie<any>('user')
 const emit = defineEmits(['logout'])
+
+// ID Group khusus untuk admin Dinas Pendidikan (group_id = 12)
+const DINAS_PENDIDIKAN_GROUP_ID = 12 
+
+const isDinasPendidikanAdmin = computed(() => {
+  return user.value?.group_id == DINAS_PENDIDIKAN_GROUP_ID || user.value?.group_id == '12'
+})
 
 const handleLogout = () => {
   emit('logout')

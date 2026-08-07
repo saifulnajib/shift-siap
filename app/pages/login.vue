@@ -170,7 +170,11 @@ const handleLogin = async () => {
     userCookie.value = data.value.data.datauser
     
     toast.add({ title: 'Login successful', color: 'success' })
-    await navigateTo('/dashboard')
+    if (data.value.data.datauser.group_id == 12 || data.value.data.datauser.group_id == '12') {
+      await navigateTo('/uptd/presensi')
+    } else {
+      await navigateTo('/dashboard')
+    }
   }
   
   loading.value = false

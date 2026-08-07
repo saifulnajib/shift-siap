@@ -397,14 +397,14 @@ const submitImport = async () => {
       
       <!-- Month Navigation & Download -->
       <div class="flex items-center gap-3">
-         <UButton icon="i-heroicons-chevron-left" color="secondary" variant="ghost" @click="date = new Date(date.getFullYear(), date.getMonth() - 1, 1)" />
+         <UButton icon="i-heroicons-chevron-left" color="secondary" variant="ghost" @click="date = new Date(date.getFullYear(), date.getMonth() - 1, 1);" />
          <div class="flex flex-col items-center min-w-[200px]">
             <span class="font-semibold capitalize text-sm">{{ format(date, 'MMMM yyyy', { locale: id }) }}</span>
             <span class="text-[10px] text-gray-500">
                 {{ format(setDate(subMonths(date, 1), 21), 'd MMM') }} - {{ format(setDate(date, 20), 'd MMM') }}
             </span>
          </div>
-         <UButton icon="i-heroicons-chevron-right" color="secondary" variant="ghost" @click="date = new Date(date.getFullYear(), date.getMonth() + 1, 1)" />
+         <UButton icon="i-heroicons-chevron-right" color="secondary" variant="ghost" @click="date = new Date(date.getFullYear(), date.getMonth() + 1, 1);" />
          <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
          <UButton
            icon="i-heroicons-arrow-down-tray"
@@ -570,7 +570,7 @@ const submitImport = async () => {
           </div>
           <p v-else class="text-xs text-slate-400 italic">Data akan dikirim ke SIAP Tanjungpinang</p>
           <div class="flex gap-2">
-            <UButton color="secondary" variant="ghost" size="sm" @click="isUploadOpen = false">Tutup</UButton>
+            <UButton color="secondary" variant="ghost" size="sm" @click="isUploadOpen = false;">Tutup</UButton>
             <UButton
               v-if="parsedJson"
               icon="i-heroicons-paper-airplane"
