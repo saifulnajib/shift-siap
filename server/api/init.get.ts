@@ -51,7 +51,7 @@ export default defineEventHandler(async () => {
     return createError({
       statusCode: 500,
       statusMessage: 'Failed to initialize database',
-      message: error.message
+      message: (error as any)?.message || 'Database error'
     });
   } finally {
     connection.release();

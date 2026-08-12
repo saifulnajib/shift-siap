@@ -54,9 +54,9 @@ export default defineEventHandler(async (event) => {
                 total_opd: rekap.length
             },
             opd_chart: rekap
-                .sort((a, b) => b.persentase - a.persentase)
+                .sort((a: any, b: any) => b.persentase - a.persentase)
                 .slice(0, 10)
-                .map(r => ({
+                .map((r: any) => ({
                     nama_opd: r.nama_opd,
                     total: r.total_hadir,
                     max: r.total_pegawai,

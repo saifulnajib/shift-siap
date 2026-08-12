@@ -4,6 +4,16 @@ Semua perubahan penting pada proyek ini akan didokumentasikan di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ---
+## [1.10.0] - 2026-08-12
+
+### Added
+- Modul **Manajemen Shift** (`/shifts`) untuk pengelolaan grup jadwal dan penugasan shift pegawai.
+- Composable `useShifts` untuk manajemen state grup shift, pemetaan jam kerja, toleransi waktu, dan sinkronisasi data API/lokal.
+- Halaman **Form Shift** (`/shifts/form`) untuk pembuatan dan penyuntingan master data grup shift.
+- Halaman **Detail Jadwal Shift** (`/shifts/[id]`) untuk melihat rincian anggota pegawai dan pembaruan jadwal shift terkait.
+- Endpoint API Backend `/api/shifts/group-jadwal`, `/api/shifts/detail-jadwal/[id]`, dan `/api/shifts/update-jadwal` untuk komunikasi data shift ke backend SIAP.
+
+---
 ## [2026-08-07]
 
 ### Added
@@ -14,6 +24,15 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ### Fixed
 - Perbaikan *error* TypeScript (`DateValue` Type Mismatch) pada filter tanggal presensi akibat isu *deep unwrapping* pada Vue `ref`.
+
+---
+## [2026-04-15]
+
+### Added
+- Modul **Pengajuan WFH** (`/wfh`) untuk mengelola dan memantau jadwal kerja dari rumah (Work From Home) pegawai.
+- Halaman **Tambah Pengajuan WFH** (`/wfh/create`) dengan filter OPD dan pencarian pegawai.
+- Endpoint API Backend `/api/wfh` (index, create, delete, pegawai) dan `/api/ref/jadwal-wfh`.
+- Scheduled task background `daily-sync` untuk sinkronisasi harian data WFH.
 
 ---
 ## [2026-03-09]

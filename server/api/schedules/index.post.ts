@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 
         return { success: true };
     } catch (error) {
-        throw createError({ statusCode: 500, message: error.message });
+        throw createError({ statusCode: 500, message: (error as any)?.message || 'Database error' });
     } finally {
         connection.release();
     }

@@ -54,6 +54,9 @@
                 <div class="w-2 h-2 rounded-full bg-primary"></div>
               </div>
               <h2 class="text-xl font-bold text-taupe-deep flex items-center gap-2">
+                <UBadge v-if="group.version" color="primary" variant="solid" size="md" class="font-mono font-bold">
+                  v{{ group.version.replace(/^v/, '') }}
+                </UBadge>
                 <UIcon name="i-heroicons-calendar" class="w-5 h-5 text-taupe-soft" />
                 {{ formatDate(group.date) }}
               </h2>
@@ -104,6 +107,7 @@ interface Commit {
 
 interface ChangelogGroup {
   date: string
+  version?: string
   items: Commit[]
 }
 

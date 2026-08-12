@@ -410,7 +410,7 @@ const closeSelfie = () => {
 }
 
 // ── Calendar state (date range) ─────────────────────────────────────────
-const dateRange = ref<{ start?: DateValue; end?: DateValue }>({
+const dateRange = ref<any>({
   start: todayCalendar(),
   end:   todayCalendar(),
 })

@@ -265,9 +265,9 @@ const todayCalendar = () => {
   return new CalendarDate(now.getFullYear(), now.getMonth() + 1, now.getDate())
 }
 
-const selectedDate = ref<CalendarDate>(todayCalendar())
+const selectedDate = ref<any>(todayCalendar())
 
-const fmtDate = (d: CalendarDate | null) =>
+const fmtDate = (d: any) =>
   d ? `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}` : ''
 
 const dateLabel = computed(() => {

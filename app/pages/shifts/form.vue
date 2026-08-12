@@ -43,7 +43,7 @@ const durationPreview = computed(() => {
 })
 
 const randomColor = () => {
-  form.color = ['#3b82f6', '#f97316', '#6366f1', '#14b8a6', '#ef4444', '#10b981'][Math.floor(Math.random() * 6)]
+  form.color = ['#3b82f6', '#f97316', '#6366f1', '#14b8a6', '#ef4444', '#10b981'][Math.floor(Math.random() * 6)] || '#3b82f6'
 }
 
 onMounted(async () => {

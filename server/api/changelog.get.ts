@@ -8,6 +8,7 @@ interface ChangelogEntry {
 
 interface ChangelogGroup {
     date: string
+    version?: string
     items: ChangelogEntry[]
 }
 
@@ -28,11 +29,17 @@ function parseChangelog(md: string): ChangelogGroup[] {
     for (const line of md.split('\n')) {
         const trimmed = line.trim()
 
-        // Match date heading: ## [2026-02-20]
-        const dateMatch = trimmed.match(/^##\s+\[?(\d{4}-\d{2}-\d{2})\]?/)
-        if (dateMatch) {
+        // Match version & date heading e.g.: ## [1.10.0] - 2026-08-12 OR ## [2026-08-12]
+        const verDateMatch = trimmed.match(/^##\s+\[([v\d\.]+)\](?:\s*-\s*\[?(\d{4}-\d{2}-\d{2})\]?)?/)
+        const simpleDateMatch = trimmed.match(/^##\s+\[?(\d{4}-\d{2}-\d{2})\]?/)
+
+        if (verDateMatch && verDateMatch[2]) {
             if (currentGroup) groups.push(currentGroup)
-            currentGroup = { date: dateMatch[1]!, items: [] }
+            currentGroup = { date: verDateMatch[2], version: verDateMatch[1], items: [] }
+            continue
+        } else if (simpleDateMatch) {
+            if (currentGroup) groups.push(currentGroup)
+            currentGroup = { date: simpleDateMatch[1]!, items: [] }
             continue
         }
 

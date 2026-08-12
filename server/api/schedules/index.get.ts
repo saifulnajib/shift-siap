@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
         const [rows] = await connection.query(sql, params);
         return rows;
     } catch (error) {
-        throw createError({ statusCode: 500, message: error.message });
+        throw createError({ statusCode: 500, message: (error as any)?.message || 'Database error' });
     } finally {
         connection.release();
     }

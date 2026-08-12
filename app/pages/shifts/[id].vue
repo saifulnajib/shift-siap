@@ -12,7 +12,7 @@ useSeoMeta({
 const route = useRoute()
 const { groups, fetchGroups, getGroupById } = useShifts()
 const toast = useToast()
-const user = useCookie('user')
+const user = useCookie<any>('user')
 
 const groupId = computed(() => String(route.params.id || ''))
 
@@ -309,7 +309,7 @@ onMounted(fetchGroups)
           <p class="text-[11px] text-slate-400 mt-3">Perubahan langsung disimpan ke SIAP.</p>
 
           <div class="flex justify-end gap-2 mt-5">
-            <UButton color="neutral" variant="ghost" :disabled="saveLoading" @click="editOpen = false">Batal</UButton>
+            <UButton color="neutral" variant="ghost" :disabled="saveLoading" @click="() => { editOpen = false }">Batal</UButton>
             <UButton color="primary" :loading="saveLoading" @click="saveEdit">Simpan</UButton>
           </div>
         </UCard>
