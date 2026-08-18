@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col h-full bg-background-light dark:bg-background-dark">
 
-    <!-- ══ FILTER PANEL (no-print) ══════════════════════════════════════════ -->
-    <section class="no-print bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-wrap items-end gap-4 shrink-0">
+    <!-- ══ FILTER PANEL ══════════════════════════════════════════════════ -->
+    <section class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-wrap items-end gap-4 shrink-0">
       <div class="flex flex-wrap gap-4 flex-1">
         <!-- Unit OPD -->
         <div class="flex flex-col gap-1 min-w-[200px]">
@@ -67,6 +67,7 @@
       <UButton
         icon="i-heroicons-document-magnifying-glass"
         color="primary"
+        :loading="previewLoading"
         :disabled="!selectedEmployee || !dateStart || !dateEnd"
         @click="generatePreview"
       >
@@ -74,75 +75,22 @@
       </UButton>
     </section>
 
-    <!-- ══ BODY: SIGNATORY (1) + PREVIEW (3) ═══════════════════════════════ -->
-    <div class="no-print-layout flex flex-1 overflow-hidden">
+    <!-- ══ BODY: PREVIEW ═══════════════════════════════════════════════ -->
+    <div class="flex-1 overflow-auto p-6">
 
-      <!-- ── Kolom Kiri: Signatory (1/4) ────────────────────────────────── -->
-      <aside class="no-print w-1/4 min-w-[220px] flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-5 gap-4 overflow-y-auto shrink-0">
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Data Penandatangan</p>
+      <!-- Empty state -->
+      <div v-if="!showReport" class="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
+        <span class="material-symbols-outlined text-6xl">table_view</span>
+        <p class="font-semibold">Pilih pegawai dan rentang tanggal, lalu klik <strong>Preview Laporan</strong></p>
+      </div>
 
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-500">Nama</label>
-          <UInput v-model="signer.nama" placeholder="Nama lengkap" />
-        </div>
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-500">NIP</label>
-          <UInput v-model="signer.nip" placeholder="NIP" />
-        </div>
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-500">Pangkat / Golongan</label>
-          <UInput v-model="signer.pangkat" placeholder="Pangkat / Golongan" />
-        </div>
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-500">Jabatan</label>
-          <UInput v-model="signer.jabatan" placeholder="Jabatan" />
-        </div>
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-500">Tempat, Tanggal</label>
-          <UInput v-model="signer.tempat" placeholder="Tanjungpinang, 26 Februari 2026" />
-        </div>
+      <!-- ══ HASIL REKAP ═══════════════════════════════════════════════ -->
+      <div v-else class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-8">
 
-        <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
-          <UButton
-            v-if="showReport"
-            icon="i-heroicons-printer"
-            color="success"
-            block
-            @click="printReport"
-          >
-            Cetak PDF
-          </UButton>
-          <p v-else class="text-xs text-slate-400 text-center">Generate preview dulu sebelum mencetak.</p>
-        </div>
-      </aside>
-
-      <!-- ── Kolom Kanan: Preview PDF (3/4) ─────────────────────────────── -->
-      <div class="flex-1 overflow-auto">
-
-        <!-- Empty state -->
-        <div v-if="!showReport" class="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
-          <span class="material-symbols-outlined text-6xl">picture_as_pdf</span>
-          <p class="font-semibold">Pilih pegawai dan rentang tanggal, lalu klik <strong>Preview Laporan</strong></p>
-        </div>
-
-        <!-- ══ PRINT AREA ════════════════════════════════════════════════ -->
-        <div v-else id="print-area" class="bg-slate-200 dark:bg-slate-700 p-6">
-
-
-      <!-- A4 Paper -->
-      <div class="mx-auto bg-white shadow-xl print-page relative overflow-hidden" style="width:210mm; min-height:297mm; padding:20mm 20mm 25mm 25mm; font-family:'Bookman Old Style', Bookman, serif; font-size:12pt; color:#000;">
-
-        <!-- WATERMARK -->
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10 z-0" style="transform: rotate(-45deg);">
-          <span class="text-6xl font-black uppercase tracking-widest text-[#ff0000]">Data Dummy / Simulasi</span>
-        </div>
-
-        <div class="relative z-10">
-          <!-- KOP SURAT -->
-          <div class="text-center mb-4 border-b-2 border-black pb-3">
-          <p class="font-bold text-[13pt] uppercase">PEMERINTAH KOTA TANJUNGPINANG</p>
-          <p class="font-bold text-[11pt]">{{ selectedUnitOpd?.label || 'NAMA UNIT OPD' }}</p>
-          <p class="text-[9pt]">Jl. Contoh No. 1, Tanjungpinang · Telp. (0771) 000-000</p>
+        <!-- KOP -->
+        <div class="text-center mb-6">
+          <p class="font-bold text-[15pt] uppercase">PEMERINTAH KOTA TANJUNGPINANG</p>
+          <p class="font-bold text-[12pt]">{{ selectedUnitOpd?.label || 'NAMA UNIT OPD' }}</p>
         </div>
 
         <!-- JUDUL -->
@@ -183,62 +131,42 @@
             <tr style="background:#f0f0f0;">
               <th style="border:1px solid #333; padding:6px 8px; text-align:center;">No</th>
               <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Bulan</th>
+              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Jumlah Hari Kerja</th>
               <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Hadir</th>
-              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Terlambat</th>
-              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Izin</th>
-              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Sakit</th>
               <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Cuti</th>
-              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Alpha</th>
+              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Dinas Luar</th>
+              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Dinas Dalam</th>
+              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Sakit</th>
+              <th style="border:1px solid #333; padding:6px 8px; text-align:center;">Tanpa Keterangan</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(row, i) in rekapRows" :key="i">
               <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ i + 1 }}</td>
               <td style="border:1px solid #333; padding:5px 8px;">{{ row.bulan }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.hariKerja }}</td>
               <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.hadir }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.terlambat }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.izin }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.sakit }}</td>
               <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.cuti }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.alpha }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.dinasLuar }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.dinasDalam }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.sakit }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ row.tanpaKeterangan }}</td>
             </tr>
             <!-- Total row -->
             <tr style="font-weight:bold; background:#f9f9f9;">
               <td colspan="2" style="border:1px solid #333; padding:5px 8px; text-align:center;">Total</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.hariKerja }}</td>
               <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.hadir }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.terlambat }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.izin }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.sakit }}</td>
               <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.cuti }}</td>
-              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.alpha }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.dinasLuar }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.dinasDalam }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.sakit }}</td>
+              <td style="border:1px solid #333; padding:5px 8px; text-align:center;">{{ totals.tanpaKeterangan }}</td>
             </tr>
           </tbody>
         </table>
-
-        <!-- TANDA TANGAN -->
-        <div style="margin-top:48px; display:flex; justify-content:flex-end;">
-          <div style="text-align:center; min-width:220px;">
-            <p>{{ signer.tempat || 'Tanjungpinang, ...' }}</p>
-            <p style="font-weight:bold; margin-top:4px;">{{ signer.jabatan || 'Jabatan Penandatangan' }}</p>
-            <div style="height:80px;"></div>
-            <p style="font-weight:bold; text-decoration:underline;">{{ signer.nama || 'Nama Penandatangan' }}</p>
-            <p>NIP. {{ signer.nip || '...' }}</p>
-            <p>{{ signer.pangkat || '' }}</p>
-          </div>
-        </div>
-
-        <!-- FOOTER CETAK -->
-        <div style="margin-top:32px; border-top:1px solid #ccc; padding-top:6px;">
-          <p style="font-size:8pt; color:#666;">Dicetak oleh sistem ShiftFlow · {{ printedAt }}</p>
-        </div>
-
-        </div> <!-- Tutup relative z-10 -->
-        </div> <!-- Tutup A4 Paper -->
-        </div> <!-- Tutup print-area -->
-
-      </div> <!-- Tutup kolom kanan -->
-    </div> <!-- Tutup flex row wrapper -->
-
+      </div>
+    </div>
   </div>
 </template>
 
@@ -250,11 +178,12 @@ import { type DateValue } from '@internationalized/date'
 definePageMeta({ layout: 'dashboard' })
 useSeoMeta({
   title: 'Laporan Presensi - SHiFT Flow',
-  description: 'Cetak laporan rekapitulasi presensi pegawai.',
+  description: 'Rekapitulasi presensi pegawai.',
 })
 
 const user = useCookie<any>('user')
 const { fetchEmployeesByUnitOpd } = useSiapApi()
+const toast = useToast()
 
 // ── Filters ──────────────────────────────────────────────────────────
 const unitOpds = ref<any[]>([])
@@ -262,7 +191,7 @@ const selectedUnitOpd = ref<any>(null)
 const employees = ref<any[]>([])
 const selectedEmployee = ref<any>(null)
 const showReport = ref(false)
-const printedAt = ref('')
+const previewLoading = ref(false)
 
 // ── Calendar state (UCalendar pakai DateValue) ────────────────────────
 const calendarStart = ref<DateValue | null>(null)
@@ -287,44 +216,75 @@ const dateEndLabel = computed(() =>
 const unitOpdOptions = computed(() => unitOpds.value.map(u => ({ id: u.id_unit_opd, label: u.nama_unit_opd, ...u })))
 const employeeOptions = computed(() => employees.value.map(e => ({ id: e.pin, label: e.nama, ...e })))
 
-// ── Signatory (manual) ────────────────────────────────────────────────
-const signer = reactive({ nama: '', nip: '', pangkat: '', jabatan: '', tempat: '' })
-
-// ── Rekap Data (dummy sampai API tersedia) ────────────────────────────
+// ── Rekap Data ───────────────────────────────────────────────────────
 const rekapRows = ref<any[]>([])
 
 const totals = computed(() => ({
-  hadir:     rekapRows.value.reduce((s, r) => s + r.hadir, 0),
-  terlambat: rekapRows.value.reduce((s, r) => s + r.terlambat, 0),
-  izin:      rekapRows.value.reduce((s, r) => s + r.izin, 0),
-  sakit:     rekapRows.value.reduce((s, r) => s + r.sakit, 0),
-  cuti:      rekapRows.value.reduce((s, r) => s + r.cuti, 0),
-  alpha:     rekapRows.value.reduce((s, r) => s + r.alpha, 0),
+  hariKerja:      rekapRows.value.reduce((s, r) => s + r.hariKerja, 0),
+  hadir:          rekapRows.value.reduce((s, r) => s + r.hadir, 0),
+  cuti:           rekapRows.value.reduce((s, r) => s + r.cuti, 0),
+  dinasLuar:      rekapRows.value.reduce((s, r) => s + r.dinasLuar, 0),
+  dinasDalam:     rekapRows.value.reduce((s, r) => s + r.dinasDalam, 0),
+  sakit:          rekapRows.value.reduce((s, r) => s + r.sakit, 0),
+  tanpaKeterangan: rekapRows.value.reduce((s, r) => s + r.tanpaKeterangan, 0),
 }))
 
-const generatePreview = () => {
+const generatePreview = async () => {
   if (!dateStart.value || !dateEnd.value || !selectedEmployee.value) return
 
   const start = new Date(dateStart.value)
   const end   = new Date(dateEnd.value)
   const months = eachMonthOfInterval({ start: startOfMonth(start), end: endOfMonth(end) })
 
-  // Data dummy — ganti dengan pemanggilan API saat sudah tersedia
-  rekapRows.value = months.map(m => ({
-    bulan:     format(m, 'MMMM yyyy', { locale: idLocale }),
-    hadir:     Math.floor(Math.random() * 10 + 18),
-    terlambat: Math.floor(Math.random() * 5),
-    izin:      Math.floor(Math.random() * 3),
-    sakit:     Math.floor(Math.random() * 2),
-    cuti:      Math.floor(Math.random() * 2),
-    alpha:     Math.floor(Math.random() * 2),
-  }))
+  previewLoading.value = true
+  try {
+    const res: any = await $fetch('/api/shifts/rekap-presensi', {
+      method: 'POST',
+      body: {
+        pin: selectedEmployee.value.id,
+        tanggal_mulai: dateStart.value,
+        tanggal_selesai: dateEnd.value,
+      },
+    })
 
-  printedAt.value = format(new Date(), "d MMMM yyyy 'pukul' HH:mm", { locale: idLocale })
+    const list: any[] = res?.data || []
+
+    rekapRows.value = months.map(m => {
+      const key = format(m, 'yyyy-MM')
+      const days = list.filter(d => (d.tgl_presensi || '').startsWith(key))
+      const sum = (fn: (d: any) => boolean) => days.filter(fn).length
+      return {
+        bulan: format(m, 'MMMM yyyy', { locale: idLocale }),
+        hariKerja: days.length,
+        hadir: sum(d => classifyAlasan(d.alasan) === 'hadir'),
+        cuti: sum(d => classifyAlasan(d.alasan) === 'cuti'),
+        dinasLuar: sum(d => classifyAlasan(d.alasan) === 'dinas-luar'),
+        dinasDalam: sum(d => classifyAlasan(d.alasan) === 'dinas-dalam'),
+        sakit: sum(d => classifyAlasan(d.alasan) === 'sakit'),
+        tanpaKeterangan: sum(d => classifyAlasan(d.alasan) === 'tanpa-keterangan'),
+      }
+    })
+  } catch (e: any) {
+    toast.add({ title: 'Gagal mengambil data presensi', description: e?.data?.message || e?.message || 'Terjadi kesalahan', color: 'error' })
+    rekapRows.value = []
+    return
+  } finally {
+    previewLoading.value = false
+  }
+
   showReport.value = true
 }
 
-const printReport = () => window.print()
+const classifyAlasan = (alasan: string) => {
+  const a = (alasan || '').trim().toLowerCase()
+  if (!a || a === 'hau') return 'hadir'                // tanpa alasan & apel upacara = masuk kerja
+  if (a === 'dd') return 'dinas-dalam'
+  if (a === 'ld' || a === 'dl') return 'dinas-luar'
+  if (a === 'ct' || a === 'cap') return 'cuti'
+  if (a === 's' || a === 'sw') return 'sakit'
+  if (a === 'tk' || a === 'a') return 'tanpa-keterangan'
+  return 'hadir'
+}
 
 const formatDateLabel = (dateStr: string) => {
   if (!dateStr) return '-'
@@ -356,52 +316,3 @@ watch([selectedEmployee, calendarStart, calendarEnd], () => { showReport.value =
 
 onMounted(fetchUnitOpds)
 </script>
-
-<style>
-@font-face {
-  font-family: 'Bookman Old Style';
-  src: url('/fonts/BookmanOldStyle.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@media print {
-  /* Sembunyikan semua elemen UI (Sidebar, Header, Filter, Form) */
-  .no-print, aside, header { display: none !important; }
-  
-  /* Reset layout agar canvas mengambil seluruh layar */
-  body, html, #__nuxt, #__layout, main {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: white !important;
-  }
-  
-  /* Hilangkan scroll dan reset area cetak */
-  #print-area {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: white !important;
-  }
-  
-  /* Hilangkan styling paper/shadows */
-  .print-page { 
-    box-shadow: none !important; 
-    margin: 0 !important;
-    width: 100% !important;
-    /* Margin halaman dikendalikan oleh setting printer, tapi kita bisa tambah sedikit padding */
-    padding: 0 !important;
-  }
-
-  @page {
-    size: A4 portrait;
-    margin: 20mm;
-  }
-}
-</style>
