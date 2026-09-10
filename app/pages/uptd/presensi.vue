@@ -244,12 +244,20 @@
             <template #bukti_surat-cell="{ row }">
               <a
                 v-if="row.original.bukti_surat"
-                :href="row.original.bukti_surat"
+                :href="`https://siap.tanjungpinangkota.go.id/${row.original.bukti_surat}`"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-xs text-primary underline hover:opacity-80"
-              >Lihat Bukti</a>
-              <span v-else class="text-xs text-slate-400">-</span>
+                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold
+                       bg-amber-50 text-amber-700 border border-amber-200
+                       hover:bg-amber-100 hover:border-amber-400 hover:shadow-sm
+                       dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800
+                       dark:hover:bg-amber-900/40 dark:hover:border-amber-600
+                       transition-all duration-150 group"
+              >
+                <span class="material-symbols-outlined text-sm leading-none group-hover:scale-110 transition-transform duration-150">description</span>
+                Lihat Bukti
+              </a>
+              <span v-else class="text-slate-300 text-xs">–</span>
             </template>
 
             <template #empty>
