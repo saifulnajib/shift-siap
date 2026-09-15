@@ -19,7 +19,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
     // Redirect group_id 12 away from routes they're not allowed
     if (user.value && ((user.value as any).group_id == 12 || (user.value as any).group_id == '12')) {
-        const allowedDinasRoutes = ['/uptd/presensi', '/uptd/dashboard', '/uptd/pegawai']
+        const allowedDinasRoutes = ['/uptd/presensi', '/uptd/dashboard', '/uptd/pegawai', '/uptd/rekapitulasi']
         if (!allowedDinasRoutes.includes(to.path)) {
             return navigateTo('/uptd/dashboard')
         }
@@ -27,7 +27,7 @@ export default defineNuxtRouteMiddleware((to) => {
     
     // Optional: Prevent other users from accessing uptd routes
     if (user.value && (user.value as any).group_id != 12 && (user.value as any).group_id != '12') {
-        if (to.path === '/uptd/presensi' || to.path === '/uptd/dashboard' || to.path === '/uptd/pegawai') {
+        if (to.path.startsWith('/uptd/')) {
             return navigateTo('/dashboard')
         }
     }
